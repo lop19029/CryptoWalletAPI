@@ -7,6 +7,7 @@ import gft.cryptoWallet.entities.CarteiraTemCripto;
 import gft.cryptoWallet.entities.Cripto;
 import gft.cryptoWallet.service.CarteiraTemCriptoService;
 import gft.cryptoWallet.service.CriptoService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -27,23 +28,27 @@ public class CriptoController {
         this.carteiraTemCriptoService = carteiraTemCriptoService;
     }
 
+    @ApiOperation(value = "Lista todas as criptomoedas no sistema.")
     @GetMapping
     public ResponseEntity<Page<ConsultaCriptoDTO>> buscarTodasAsCriptos(@PageableDefault Pageable pageable){
         return ResponseEntity.ok(criptoService.listarTodasAsCriptos(pageable).map(CriptoMapper::fromEntity));
     }
 
+    @ApiOperation(value = "Cria uma nova criptomoeda.")
     @PostMapping
     public ResponseEntity<ConsultaCriptoDTO> salvarCripto(@RequestBody RegistroCriptoDTO dto){
         Cripto cripto = criptoService.salvarCripto(CriptoMapper.fromDTO(dto));
         return ResponseEntity.ok(CriptoMapper.fromEntity(cripto));
     }
 
+    @ApiOperation(value = "Devolve uma criptomoeda usando o simbolo especifico.")
     @GetMapping("{simbolo}")
     public ResponseEntity<ConsultaCriptoDTO> buscarCripto(@PathVariable String simbolo){
         Cripto cripto = criptoService.buscarCripto(simbolo);
         return ResponseEntity.ok(CriptoMapper.fromEntity(cripto));
     }
 
+    @ApiOperation(value = "Altera os dados de uma criptomoeda.")
     @PutMapping("{simbolo}")
     public ResponseEntity<ConsultaCriptoDTO> alterarCripto(@RequestBody RegistroCriptoDTO dto,
                                                            @PathVariable String simbolo) {
@@ -51,6 +56,8 @@ public class CriptoController {
         return ResponseEntity.ok(CriptoMapper.fromEntity(cripto));
     }
 
+    @ApiOperation(value = "Elimina uma criptomoeda do sistema. Junto com todas as instancias da mesma " +
+            "que estiverem registradas dentro das carteiras.")
     @DeleteMapping("{simbolo}")
     public ResponseEntity<ConsultaCriptoDTO> excluirCripto(@PathVariable String simbolo){
 

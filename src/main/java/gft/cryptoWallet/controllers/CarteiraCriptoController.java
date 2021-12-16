@@ -9,6 +9,7 @@ import gft.cryptoWallet.exception.DataInsertionException;
 import gft.cryptoWallet.exception.EntityNotFoundException;
 import gft.cryptoWallet.service.CarteiraService;
 import gft.cryptoWallet.service.CarteiraTemCriptoService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,8 @@ public class CarteiraCriptoController {
         this.carteiraService = carteiraService;
     }
 
+    @ApiOperation(value = "Adiciona criptomoeda numa carteira, ou soma a quantidade especificada caso essa carteira ja" +
+            "possua o criptoativo.")
     @PostMapping(path = "/adicionar-criptos")
     public final ResponseEntity<ConsultaCarteiraTemCriptoDTO> salvarCripto(@RequestBody RegistroCarteiraTemCriptoDTO dto){
         CarteiraTemCripto carteiraTemCripto = CarteiraTemCriptoMapper.fromDTOTransacao(dto);
@@ -49,7 +52,7 @@ public class CarteiraCriptoController {
 
         return ResponseEntity.ok(CarteiraTemCriptoMapper.fromEntity(carteiraTemCriptoSalva));
     }
-
+    @ApiOperation(value = "Reduz a quantidade de uma criptomoeda numa carteira caso o resultado da operação seja >= 0.")
     @PostMapping(path = "/diminuir-criptos")
     public final ResponseEntity<ConsultaCarteiraTemCriptoDTO> diminuirCripto(@RequestBody RegistroCarteiraTemCriptoDTO dto){
         CarteiraTemCripto carteiraTemCripto = CarteiraTemCriptoMapper.fromDTOTransacao(dto);
@@ -75,6 +78,7 @@ public class CarteiraCriptoController {
         throw new EntityNotFoundException("Essa cripto não esta presente na carteira especificada.");
     }
 
+    @ApiOperation(value = "Elimina uma criptomoeda de uma carteira especifica.")
     @DeleteMapping("{id}")
     public ResponseEntity<CarteiraTemCripto> excluirCriptoDeCarteira(@PathVariable Long id){
         carteiraTemCriptoService.excluirCarteiraTemCripto(id);

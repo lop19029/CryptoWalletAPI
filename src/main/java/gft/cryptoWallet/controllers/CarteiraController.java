@@ -10,6 +10,7 @@ import gft.cryptoWallet.entities.Cliente;
 import gft.cryptoWallet.service.CarteiraService;
 import gft.cryptoWallet.service.CarteiraTemCriptoService;
 import gft.cryptoWallet.service.ClienteService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -33,6 +34,7 @@ public class CarteiraController {
         this.carteiraTemCriptoService = carteiraTemCriptoService;
     }
 
+    @ApiOperation(value = "Cria uma nova carteira para um cliente especifico.")
     @PostMapping
     public ResponseEntity<ConsultaCarteiraDTO> salvarCarteira(@RequestBody RegistroCarteiraDTO dto) {
         //Get client from clienteId
@@ -49,18 +51,21 @@ public class CarteiraController {
         return ResponseEntity.ok(CarteiraMapper.fromEntity(carteiraComId));
     }
 
+    @ApiOperation(value = "Lista todas as carteiras no sistema.")
     @GetMapping
     public ResponseEntity<Page<ConsultaCarteiraDTO>> buscarTodasAsCarteiras(@PageableDefault Pageable pageable){
         return ResponseEntity.ok(carteiraService.listarTodasAsCarteiras(pageable)
                 .map(CarteiraMapper::fromEntity));
     }
 
+    @ApiOperation(value = "Devolve uma carteira segundo o id especificado.")
     @GetMapping("{id}")
     public ResponseEntity<ConsultaCarteiraDTO> buscarCarteira(@PathVariable Long id){
         Carteira carteira = carteiraService.buscarCarteira(id, null);
         return ResponseEntity.ok(CarteiraMapper.fromEntity(carteira));
     }
 
+    @ApiOperation(value = "Elimina uma carteira usando o id.")
     @DeleteMapping("{id}")
     public ResponseEntity<ConsultaCarteiraDTO> excluirCarteira(@PathVariable Long id) {
 

@@ -3,6 +3,7 @@ package gft.cryptoWallet.controllers;
 import gft.cryptoWallet.dto.auth.AutenticacaoDTO;
 import gft.cryptoWallet.dto.auth.TokenDTO;
 import gft.cryptoWallet.service.AutenticacaoService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,7 @@ public class AutenticacaoController {
 
 
     @PostMapping
+    @ApiOperation(value = "Valida se um usuario esta registrado no sistema e devolve um Token de acesso. O tem um periodo de validade de 10 minutos.")
     public ResponseEntity<TokenDTO> autenticar(@RequestBody AutenticacaoDTO autenticacaoDTO){
 
         try {

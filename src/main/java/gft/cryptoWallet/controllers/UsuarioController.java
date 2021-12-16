@@ -5,6 +5,7 @@ import gft.cryptoWallet.dto.usuario.RegistroUsuarioDTO;
 import gft.cryptoWallet.dto.usuario.UsuarioMapper;
 import gft.cryptoWallet.entities.Usuario;
 import gft.cryptoWallet.service.UsuarioService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,7 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
+    @ApiOperation(value = "Registra um novo usuario no sistema.")
     @PostMapping
     public ResponseEntity<ConsultaUsuarioDTO> salvarUsuario(@RequestBody RegistroUsuarioDTO dto) {
         Usuario usuario = usuarioService.salvarUsuario(UsuarioMapper.fromDTO(dto));
