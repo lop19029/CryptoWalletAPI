@@ -23,7 +23,7 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 Leia a documentação e teste o API:
 ```
-...
+https://gftstartcryptowalletapi.herokuapp.com/swagger-ui.html
 ```
 
 Para fins de teste, você pode se registrar acessando com o usuario padrão:
