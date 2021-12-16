@@ -1,0 +1,47 @@
+CREATE TABLE tb_cliente(
+id BIGINT AUTO_INCREMENT PRIMARY KEY,
+cpf VARCHAR(11) NOT NULL,
+nome VARCHAR(255) NOT NULL,
+email VARCHAR(255) NOT NULL,
+logradouro VARCHAR(255) NOT NULL,
+numero VARCHAR(10) NOT NULL,
+complemento VARCHAR(255),
+cep VARCHAR(8) NOT NULL
+);
+
+CREATE TABLE tb_carteira(
+id BIGINT AUTO_INCREMENT PRIMARY KEY,
+cliente_id BIGINT,
+FOREIGN KEY (cliente_id) REFERENCES tb_cliente(id)
+);
+
+CREATE TABLE tb_cripto(
+id BIGINT AUTO_INCREMENT PRIMARY KEY,
+nome VARCHAR(255) NOT NULL,
+simbolo VARCHAR(10) NOT NULL,
+valor DECIMAL(19,2) NOT NULL
+);
+
+CREATE TABLE tb_carteira_tem_cripto(
+id BIGINT AUTO_INCREMENT PRIMARY KEY,
+carteira_id BIGINT,
+cripto_id BIGINT,
+quantidade DECIMAL(36,18) NOT NULL,
+FOREIGN KEY (carteira_id) REFERENCES tb_carteira(id),
+FOREIGN KEY (cripto_id) REFERENCES tb_cripto(id)
+);
+
+CREATE TABLE tb_perfil(
+id BIGINT AUTO_INCREMENT PRIMARY KEY,
+nome VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE tb_usuario(
+id BIGINT AUTO_INCREMENT PRIMARY KEY,
+email VARCHAR(255) NOT NULL,
+senha VARCHAR(255) NOT NULL,
+perfil_id BIGINT NOT NULL,
+CONSTRAINT FK_UsuarioPerfil FOREIGN KEY (perfil_id)
+    REFERENCES tb_perfil(id)
+);
+
